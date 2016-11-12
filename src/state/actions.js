@@ -8,6 +8,11 @@ export function getPopularMovies () {
     const req1 = fetch(fourStarUrl)
     const req2 = fetch(fiveStarUrl)
 
+    function _extract_year(releaseDate) {
+        // TODO: check input first
+        return releaseDate.substring(0,4)
+    }
+
     return Promise.all([req1, req2])
       .then(responses => responses.map(res => res.json()))
       .then(jsonPromises => Promise.all(jsonPromises))
@@ -22,6 +27,13 @@ export function getPopularMovies () {
         // 3. each movie object in the results needs a releaseYear attribute added
         //    this is used in src/components/movies-list.js line 26
         //
+
+        jsonResponses[0].results.forEach(
+            part => { part['releaseYear'] = _extract_year(part['releaseDate'])
+        })
+        jsonResponses[1].results.forEach(
+            part => { part['releaseYear'] = _extract_year(part['releaseDate'])
+        })
 
         const combinedResults = jsonResponses[0].results
             .concat(jsonResponses[1].results)
