@@ -24,6 +24,7 @@ export function getPopularMovies () {
         //
 
         const combinedResults = jsonResponses[0].results
+            .concat(jsonResponses[1].results)
 
         return dispatch({
           type: 'GET_MOVIES_SUCCESS',
