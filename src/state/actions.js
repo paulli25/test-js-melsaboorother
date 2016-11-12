@@ -9,8 +9,7 @@ export function getPopularMovies () {
     const req2 = fetch(fiveStarUrl)
 
     function _extract_year(releaseDate) {
-        // TODO: check input first
-        return releaseDate.substring(0,4)
+        return new Date(releaseDate).getFullYear()
     }
 
     function _order(a, b) {
