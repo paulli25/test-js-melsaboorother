@@ -23,7 +23,7 @@ export function getPopularMovies () {
         //    this is used in src/components/movies-list.js line 26
         //
 
-        const combinedResults = []
+        const combinedResults = jsonResponses[0].results
 
         return dispatch({
           type: 'GET_MOVIES_SUCCESS',
