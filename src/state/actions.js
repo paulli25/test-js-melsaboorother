@@ -13,6 +13,15 @@ export function getPopularMovies () {
         return releaseDate.substring(0,4)
     }
 
+    function _order(a, b) {
+        // most recent year first
+        if (a.releaseYear > b.releaseYear) return -1;
+        if (a.releaseYear < b.releaseYear) return 1;
+        if (a.trackName > b.trackName) return 1;
+        if (a.trackName < b.trackName) return -1;
+        return 0
+    }
+
     return Promise.all([req1, req2])
       .then(responses => responses.map(res => res.json()))
       .then(jsonPromises => Promise.all(jsonPromises))
@@ -37,6 +46,7 @@ export function getPopularMovies () {
 
         const combinedResults = jsonResponses[0].results
             .concat(jsonResponses[1].results)
+            .sort(_order)
 
         return dispatch({
           type: 'GET_MOVIES_SUCCESS',
